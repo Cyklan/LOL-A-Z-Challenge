@@ -4,15 +4,18 @@ const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
-  database: process.env.DB_SCHEMA
+  database: process.env.DB_SCHEMA,
 })
 
 const getChampions = () => {
   return new Promise((resolve, reject) => {
-    connection.query("SELECT * FROM champions", (error, results) => {
-      if (error) reject(error)
-      resolve(results)
-    })
+    connection.query(
+      "SELECT * FROM champions ORDER BY name",
+      (error, results) => {
+        if (error) reject(error)
+        resolve(results)
+      }
+    )
   })
 }
 
@@ -88,10 +91,17 @@ const setAccountId = accountId => {
   })
 }
 
-const updateChampionStats = (championId, kills, deaths, assists, lane) => {
+const updateChampionStats = (
+  championId,
+  kills,
+  deaths,
+  assists,
+  lane,
+  goldEarned
+) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      `UPDATE champions SET kills = (kills + ${kills}), deaths = (deaths + ${deaths}), assists = (assists + ${assists}), position = "${lane}" WHERE id = ${championId}`,
+      `UPDATE champions SET kills = (kills + ${kills}), deaths = (deaths + ${deaths}), assists = (assists + ${assists}), position = "${lane}", gold = (gold + ${goldEarned}) WHERE id = ${championId}`,
       error => {
         if (error) reject(error)
         resolve(true)
@@ -124,6 +134,11 @@ const setChampionFinished = championId => {
   })
 }
 
+const getStats = () => {
+  const sumSql =
+    "select SUM(kills) as kills, SUM(assists) as assists, SUM(deaths) as deaths, SUM(gold) as gold FROM champions"
+}
+
 module.exports = {
   addMatch,
   getChampions,
@@ -135,5 +150,5 @@ module.exports = {
   setFirstTimestamp,
   setLastTimestamp,
   setChampionFinished,
-  updateChampionStats
+  updateChampionStats,
 }

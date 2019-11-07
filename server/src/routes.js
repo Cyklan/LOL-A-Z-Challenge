@@ -35,6 +35,8 @@ router.get("/champions/current", async (req, res) => {
   res.send()
 })
 
+router.get("/stats", async (req, res) => {})
+
 router.get("/timestamp/last", async (req, res) => {
   await db
     .getLastTimestamp()

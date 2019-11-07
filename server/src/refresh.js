@@ -32,13 +32,16 @@ const updateStats = async (gameId, championId) => {
     const deaths = player.stats.deaths
     const assists = player.stats.assists
     const gameWon = player.stats.win
+    const gold = playyer.stats.goldEarned
     const lane = player.timeline.lane
 
     await db
-      .updateChampionStats(championId, kills, deaths, assists, lane)
+      .updateChampionStats(championId, kills, deaths, assists, lane, gold)
       .catch(error => console.log(error))
 
-    await db.addMatch(gameId, kills, deaths, assists).catch(error => console.log(error))
+    await db
+      .addMatch(gameId, kills, deaths, assists)
+      .catch(error => console.log(error))
 
     if (gameWon) {
       await db

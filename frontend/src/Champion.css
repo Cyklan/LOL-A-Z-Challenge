@@ -1,0 +1,39 @@
+div.champion {
+  display: inline-block;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 50px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  height: 200px;
+  min-width: 189px;
+  position: relative;
+}
+div.champion:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.back,
+.front {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+div.champion .container {
+  min-width: 120px;
+  padding-bottom: 8px;
+}
+
+img.champion {
+  padding-top: 8px;
+}
+
+div.champion h4 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+img.gray {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
