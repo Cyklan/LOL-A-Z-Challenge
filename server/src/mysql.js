@@ -13,6 +13,7 @@ const getChampions = () => {
       "SELECT * FROM champions ORDER BY name",
       (error, results) => {
         if (error) reject(error)
+        console.log(results)
         resolve(results)
       }
     )
@@ -30,8 +31,6 @@ const getCurrentChampion = () => {
     )
   })
 }
-
-const getStats = () => {}
 
 const setLastTimestamp = timestamp => {
   return new Promise((resolve, reject) => {

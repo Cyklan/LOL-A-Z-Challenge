@@ -23,6 +23,7 @@ class Champion extends React.Component {
             image={this.props.image}
             name={this.props.name}
             losses={this.props.losses}
+            done={this.props.done}
           />
         ) : (
           <Back
@@ -44,7 +45,7 @@ function Front(props) {
       <img
         src={props.image}
         alt={props.name}
-        className={props.done ? "champion" : "gray champion"}
+        className={props.done === 1 ? "champion" : "gray champion"}
       />
       <div className='container'>
         <h4>{props.name}</h4>
