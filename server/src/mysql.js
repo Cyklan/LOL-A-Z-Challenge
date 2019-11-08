@@ -4,19 +4,22 @@ const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
-  database: process.env.DB_SCHEMA,
+  database: process.env.DB_SCHEMA
 })
 
 const getChampions = () => {
+  let sql = "SELECT *, "
+  sql +=
+    "(SELECT SUM(damage) FROM matches WHERE championid = champions.id) AS damage, "
+  sql +=
+    "(SELECT SUM(duration) / 60  FROM matches WHERE championid = champions.id) AS duration "
+  sql += "FROM champions ORDER BY name"
   return new Promise((resolve, reject) => {
-    connection.query(
-      "SELECT * FROM champions ORDER BY name",
-      (error, results) => {
-        if (error) reject(error)
-        console.log(results)
-        resolve(results)
-      }
-    )
+    connection.query(sql, (error, results) => {
+      if (error) reject(error)
+      // console.log(results)
+      resolve(results)
+    })
   })
 }
 
@@ -96,11 +99,12 @@ const updateChampionStats = (
   deaths,
   assists,
   lane,
-  goldEarned
+  goldEarned,
+  visionScore
 ) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      `UPDATE champions SET kills = (kills + ${kills}), deaths = (deaths + ${deaths}), assists = (assists + ${assists}), position = "${lane}", gold = (gold + ${goldEarned}) WHERE id = ${championId}`,
+      `UPDATE champions SET kills = (kills + ${kills}), deaths = (deaths + ${deaths}), assists = (assists + ${assists}), position = "${lane}", gold = (gold + ${goldEarned}), vision = (vision + ${visionScore}) WHERE id = ${championId}`,
       error => {
         if (error) reject(error)
         resolve(true)
@@ -109,10 +113,18 @@ const updateChampionStats = (
   })
 }
 
-const addMatch = (gameId, kills, deaths, assists) => {
+const addMatch = (
+  gameId,
+  kills,
+  deaths,
+  assists,
+  damage,
+  duration,
+  champion
+) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      `INSERT INTO matches (id, kills, deaths, assists) VALUES (${gameId}, ${kills}, ${deaths}, ${assists})`,
+      `INSERT INTO matches (id, kills, deaths, assists, championid, duration, damage) VALUES (${gameId}, ${kills}, ${deaths}, ${assists}, ${champion}, ${duration}, ${damage})`,
       error => {
         if (error) reject(error)
         resolve(true)
@@ -149,5 +161,5 @@ module.exports = {
   setFirstTimestamp,
   setLastTimestamp,
   setChampionFinished,
-  updateChampionStats,
+  updateChampionStats
 }

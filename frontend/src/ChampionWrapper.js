@@ -13,6 +13,10 @@ function ChampionWrapper(props) {
         kills={champion.kills}
         deaths={champion.deaths}
         assists={champion.assists}
+        gold={champion.gold}
+        vision={champion.vision}
+        duration={champion.duration}
+        damage={champion.damage}
       />
     )
   })

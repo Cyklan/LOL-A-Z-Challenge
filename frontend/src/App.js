@@ -10,34 +10,39 @@ class App extends React.Component {
     super(props)
     this.state = {
       champions: [],
-      current: {},
+      current: {}
     }
   }
 
   componentDidMount = async () => {
+    this.refresh()
+    setInterval(this.refresh, 20000)
+  }
+
+  refresh = async () => {
     const currentChampion = await fetch(
-      "http://localhost:42690/api/champions/current"
+      "https://leagueapi.cyklan.de/api/champions/current"
     )
       .then(res => res.json())
       .then(res => res.message)
-
-    const allChampions = await fetch("http://localhost:42690/api/champions")
+    const allChampions = await fetch(
+      "https://leagueapi.cyklan.de/api/champions"
+    )
       .then(res => res.json())
       .then(res => res.message)
-
     const favicon = document.querySelector("link[rel*='icon']")
     favicon.href = currentChampion.image
     document.title = TITLE + currentChampion.name
     this.setState({
       champions: allChampions,
-      current: currentChampion,
+      current: currentChampion
     })
   }
 
   render = () => {
     return (
-      <div className='App'>
-        <header className='App-header'>
+      <div className="App">
+        <header className="App-header">
           <Current
             name={this.state.current.name}
             image={this.state.current.image}

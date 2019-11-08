@@ -7,7 +7,7 @@ function Current(props) {
       <h2>{props.name}</h2>
       <img src={props.image} alt={props.name} className='header' />
       <br />
-      <span>Niederlagen: {props.losses}</span>
+      <span>Losses: {props.losses}</span>
       <br />
       <span className='stats'>Kills: {props.kills}</span>
       <span className='stats'>Deaths: {props.deaths}</span>
