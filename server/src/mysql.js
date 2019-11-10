@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
-  database: process.env.DB_SCHEMA
+  database: process.env.DB_SCHEMA,
 })
 
 const getChampions = () => {
@@ -100,11 +100,12 @@ const updateChampionStats = (
   assists,
   lane,
   goldEarned,
-  visionScore
+  visionScore,
+  loss
 ) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      `UPDATE champions SET kills = (kills + ${kills}), deaths = (deaths + ${deaths}), assists = (assists + ${assists}), position = "${lane}", gold = (gold + ${goldEarned}), vision = (vision + ${visionScore}) WHERE id = ${championId}`,
+      `UPDATE champions SET losses = (losses + ${loss}), kills = (kills + ${kills}), deaths = (deaths + ${deaths}), assists = (assists + ${assists}), position = "${lane}", gold = (gold + ${goldEarned}), vision = (vision + ${visionScore}) WHERE id = ${championId}`,
       error => {
         if (error) reject(error)
         resolve(true)
@@ -161,5 +162,5 @@ module.exports = {
   setFirstTimestamp,
   setLastTimestamp,
   setChampionFinished,
-  updateChampionStats
+  updateChampionStats,
 }

@@ -4,8 +4,8 @@ const requestOptions = {
   method: "GET",
   mode: "cors",
   headers: {
-    "X-Riot-Token": process.env.API_KEY
-  }
+    "X-Riot-Token": process.env.API_KEY,
+  },
 }
 
 const getAccountId = username => {
@@ -36,13 +36,12 @@ const getAllMatches = accountId => {
 const getMatchesByTimestamp = (accountId, timestamp) => {
   return new Promise(async (resolve, reject) => {
     const res = await fetch(
-      `https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${accountId}?beginTime=${timestamp}`,
+      `https://euw1.api.riotgames.com/lol/match/v4/matchlists/by-account/${accountId}?beginTime=${timestamp}&queue=420`,
       requestOptions
     )
       .then(res => res.json())
       .then(res => res.matches)
       .catch(error => reject(error))
-
     resolve(res)
   })
 }
@@ -64,5 +63,5 @@ module.exports = {
   getAccountId,
   getAllMatches,
   getMatchByGameId,
-  getMatchesByTimestamp
+  getMatchesByTimestamp,
 }

@@ -5,19 +5,19 @@ class Champion extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      flipped: false
+      flipped: false,
     }
   }
 
   clickhandler = () => {
     this.setState(prevState => ({
-      flipped: !prevState.flipped
+      flipped: !prevState.flipped,
     }))
   }
 
   render = () => {
     return (
-      <div className="champion" onClick={this.clickhandler}>
+      <div className='champion' onClick={this.clickhandler}>
         {!this.state.flipped ? (
           <Front
             image={this.props.image}
@@ -45,13 +45,13 @@ class Champion extends React.Component {
 
 function Front(props) {
   return (
-    <div className="front">
+    <div className='front'>
       <img
         src={props.image}
         alt={props.name}
         className={props.done === 1 ? "champion" : "gray champion"}
       />
-      <div className="container">
+      <div className='container'>
         <h4>{props.name}</h4>
         <span>Losses: {props.losses}</span>
       </div>
@@ -63,10 +63,10 @@ function Back(props) {
   const kda = (props.kills + props.assists) / Math.max(1, props.deaths)
   let doneGame = props.done ? 1 : 0
   return (
-    <div className="back">
-      <div className="container">
+    <div className='back'>
+      <div className='container'>
         <h4>{props.name}</h4>
-        <span>KD/A: {kda}</span>
+        <span>KD/A: {kda.toFixed(2)}</span>
         <br />
         <span>
           Kills: {props.kills} | Ø:&nbsp;
@@ -95,7 +95,7 @@ function Back(props) {
         <br />
         <span>
           Dmg/min:&nbsp;
-          {(props.duration) ? (props.damage / props.duration).toFixed(1) : 0}
+          {props.duration ? (props.damage / props.duration).toFixed(1) : 0}
         </span>
       </div>
     </div>

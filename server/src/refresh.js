@@ -7,8 +7,8 @@ const checkForNewGame = async () => {
 
   const matches = await api.getMatchesByTimestamp(id, latest)
   if (matches) {
-    if (matches[0].queue === 420) {
-      const newLatest = matches[0].timestamp + 1
+    const newLatest = matches[0].timestamp + 1
+    if (/*matches[0].queue === 420 */ true) {
       const gameId = matches[0].gameId
       const champion = matches[0].champion
 
@@ -23,7 +23,7 @@ const checkForNewGame = async () => {
 const updateStats = async (gameId, championId) => {
   return new Promise(async (resolve, reject) => {
     const match = await api.getMatchByGameId(gameId)
-    // console.log(match.participants[0])
+    console.log(match.participants[0])
     const player = match.participants.find(participant => {
       return participant.championId == championId
     })
@@ -32,18 +32,35 @@ const updateStats = async (gameId, championId) => {
     const deaths = player.stats.deaths
     const assists = player.stats.assists
     const gameWon = player.stats.win
-    const gold = playyer.stats.goldEarned
+    const gold = player.stats.goldEarned
     const lane = player.timeline.lane
     const vision = player.stats.visionScore
     const totalDamage = player.stats.totalDamageDealt
     const duration = match.gameDuration
 
     await db
-      .updateChampionStats(championId, kills, deaths, assists, lane, gold, vision)
+      .updateChampionStats(
+        championId,
+        kills,
+        deaths,
+        assists,
+        lane,
+        gold,
+        vision,
+        !gameWon ? 1 : 0
+      )
       .catch(error => console.log(error))
 
     await db
-      .addMatch(gameId, kills, deaths, assists, totalDamage, duration, championId)
+      .addMatch(
+        gameId,
+        kills,
+        deaths,
+        assists,
+        totalDamage,
+        duration,
+        championId
+      )
       .catch(error => console.log(error))
 
     if (gameWon) {
