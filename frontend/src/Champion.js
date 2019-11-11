@@ -66,7 +66,7 @@ function Back(props) {
     <div className='back'>
       <div className='container'>
         <h4>{props.name}</h4>
-        <span>KD/A: {kda.toFixed(2)}</span>
+        <span>KDA: {kda.toFixed(2)}</span>
         <br />
         <span>
           Kills: {props.kills} | Ø:&nbsp;

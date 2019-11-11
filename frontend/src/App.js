@@ -3,7 +3,7 @@ import Current from "./Current"
 import ChampionWrapper from "./ChampionWrapper"
 import "./App.css"
 
-const TITLE = "Emero gewinnt mit: "
+const TITLE = "Emero intet mit: "
 
 class App extends React.Component {
   constructor(props) {
