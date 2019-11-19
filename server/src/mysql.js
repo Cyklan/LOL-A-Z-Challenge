@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
-  database: process.env.DB_SCHEMA,
+  database: process.env.DB_SCHEMA
 })
 
 const getChampions = () => {
@@ -121,11 +121,12 @@ const addMatch = (
   assists,
   damage,
   duration,
-  champion
+  champion,
+  gold
 ) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      `INSERT INTO matches (id, kills, deaths, assists, championid, duration, damage) VALUES (${gameId}, ${kills}, ${deaths}, ${assists}, ${champion}, ${duration}, ${damage})`,
+      `INSERT INTO matches (id, kills, deaths, assists, championid, duration, damage, gold) VALUES (${gameId}, ${kills}, ${deaths}, ${assists}, ${champion}, ${duration}, ${damage}, ${gold})`,
       error => {
         if (error) reject(error)
         resolve(true)
@@ -147,8 +148,14 @@ const setChampionFinished = championId => {
 }
 
 const getStats = () => {
-  const sumSql =
-    "select SUM(kills) as kills, SUM(assists) as assists, SUM(deaths) as deaths, SUM(gold) as gold FROM champions"
+  const sql =
+    "SELECT SUM(matches.kills) AS kills, sum(matches.deaths) AS deaths, sum(matches.assists) AS assists, sum(matches.duration) AS duration, sum(matches.damage) AS damage, sum(matches.gold) AS gold FROM matches"
+  return new Promise((resolve, reject) => {
+    connection.query(sql, (error, results) => {
+      if (error) reject(error)
+      resolve(results[0])
+    })
+  })
 }
 
 module.exports = {
@@ -162,5 +169,5 @@ module.exports = {
   setFirstTimestamp,
   setLastTimestamp,
   setChampionFinished,
-  updateChampionStats,
+  updateChampionStats
 }

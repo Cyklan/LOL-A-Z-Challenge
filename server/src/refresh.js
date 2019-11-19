@@ -59,7 +59,8 @@ const updateStats = async (gameId, championId) => {
         assists,
         totalDamage,
         duration,
-        championId
+        championId,
+        gold
       )
       .catch(error => console.log(error))
 
