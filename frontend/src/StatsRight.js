@@ -7,12 +7,12 @@ const StatsRight = props => {
     <div className="stat">
       <span className="stats">
         Total {props.first ? props.first.name : ""}:&nbsp;
-        {props.first ? props.first.stat : ""}
+        {props.first ? props.first.stat : 0}
       </span>
       <br />
       <span className="stats">
         Total {props.second ? props.second.name : ""}:&nbsp;
-        {props.second ? props.second.stat : ""}
+        {props.second ? props.second.stat : 0}
       </span>
       <br />
       <span className="stats">
