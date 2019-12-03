@@ -157,11 +157,9 @@ const getStats = () => {
 	sql += "COUNT(id) as games, "
 	sql += "((SELECT SUM(done) FROM champions) / (SELECT COUNT(id) FROM matches)) * 100 AS winrate "
 	sql += "FROM matches;"
-
-	console.log(sql)
+	
 	return new Promise((resolve, reject) => {
 		connection.query(sql, (error, results) => {
-			console.log(results)
 			if (error) reject(error)
 			resolve(results[0])
 		})

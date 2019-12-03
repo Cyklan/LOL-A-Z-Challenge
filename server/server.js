@@ -15,5 +15,5 @@ app.listen(42069, () => {
   console.log("Listening on port 42069")
 })
 
-// setInterval(require("./src/refresh"), 10000)
-refresh()
+setInterval(require("./src/refresh"), 10000)
+// refresh()
