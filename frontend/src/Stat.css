@@ -1,0 +1,8 @@
+div.stat > span.stats {
+  font-size: 1rem;
+  margin-left: 20px;
+  margin-right: 20px;
+  display: block;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
