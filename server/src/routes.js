@@ -13,8 +13,6 @@ router.get("/champions", async (req, res) => {
 		.catch(error => {
 			res.json({ status: "failure", message: error })
 		})
-
-	res.send()
 })
 
 // get current champion
@@ -27,8 +25,6 @@ router.get("/champions/current", async (req, res) => {
 		.catch(error => {
 			res.json({ status: "failure", message: error })
 		})
-
-	res.send()
 })
 
 router.get("/stats", async (req, res) => {
@@ -40,8 +36,6 @@ router.get("/stats", async (req, res) => {
 		.catch(error => {
 			res.json({ status: "failure", message: error })
 		})
-
-	res.send()
 })
 
 router.get("/timestamp/last", async (req, res) => {
@@ -53,8 +47,6 @@ router.get("/timestamp/last", async (req, res) => {
 		.catch(error => {
 			res.json({ status: "failure", message: error })
 		})
-
-	res.send()
 })
 
 router.post("/timestamp/first", async (req, res) => {
@@ -66,7 +58,7 @@ router.post("/timestamp/first", async (req, res) => {
 		.catch(error => {
 			res.json({ status: "failure", message: error })
 		})
-	res.send()
+
 	let accountId = await api.getAccountId(req.body.summoner)
 	await db.setAccountId(accountId).catch(error => console.log(error))
 	setInterval(require("./refresh")(), 10000)
