@@ -26,18 +26,19 @@ class Champion extends React.Component {
             done={this.props.done}
           />
         ) : (
-          <Back
-            name={this.props.name}
-            kills={this.props.kills}
-            deaths={this.props.deaths}
-            assists={this.props.assists}
-            losses={this.props.losses}
-            gold={this.props.gold}
-            vision={this.props.vision}
-            damage={this.props.damage}
-            duration={this.props.duration}
-          />
-        )}
+            <Back
+              name={this.props.name}
+              kills={this.props.kills}
+              deaths={this.props.deaths}
+              assists={this.props.assists}
+              losses={this.props.losses}
+              gold={this.props.gold}
+              vision={this.props.vision}
+              damage={this.props.damage}
+              duration={this.props.duration}
+              done={this.props.done}
+            />
+          )}
       </div>
     )
   }
@@ -61,7 +62,7 @@ function Front(props) {
 
 function Back(props) {
   const kda = (props.kills + props.assists) / Math.max(1, props.deaths)
-  let doneGame = props.done ? 1 : 0
+
   return (
     <div className='back'>
       <div className='container'>
@@ -70,27 +71,27 @@ function Back(props) {
         <br />
         <span>
           Kills: {props.kills} | Ø:&nbsp;
-          {(props.kills / Math.max(1, props.losses + doneGame)).toFixed(1)}
+          {(props.kills / Math.max(1, props.losses + props.done)).toFixed(1)}
         </span>
         <br />
         <span>
           Deaths: {props.deaths} | Ø:&nbsp;
-          {(props.deaths / Math.max(1, props.losses + doneGame)).toFixed(1)}
+          {(props.deaths / Math.max(1, props.losses + props.done)).toFixed(1)}
         </span>
         <br />
         <span>
           Assists: {props.assists} | Ø:&nbsp;
-          {(props.assists / Math.max(1, props.losses + doneGame)).toFixed(1)}
+          {(props.assists / Math.max(1, props.losses + props.done)).toFixed(1)}
         </span>
         <br />
         <span>
           Gold: {props.gold} | Ø:&nbsp;
-          {(props.gold / Math.max(1, props.losses + doneGame)).toFixed(1)}
+          {(props.gold / Math.max(1, props.losses + props.done)).toFixed(1)}
         </span>
         <br />
         <span>
           Vision Score Ø:&nbsp;
-          {(props.vision / Math.max(1, props.losses + doneGame)).toFixed(1)}
+          {(props.vision / Math.max(1, props.losses + props.done)).toFixed(1)}
         </span>
         <br />
         <span>
