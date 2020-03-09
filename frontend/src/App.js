@@ -6,8 +6,8 @@ import "./App.css"
 import Stat from "./Stat"
 
 const TITLE = "Emero intet mit: "
-const URL = "https://leagueapi.cyklan.de"
-// const URL = "http://localhost:42069"
+// const URL = "https://leagueapi.cyklan.de"
+const URL = "http://localhost:42069"
 
 class App extends React.Component {
   constructor(props) {
@@ -37,6 +37,7 @@ class App extends React.Component {
     const favicon = document.querySelector("link[rel*='icon']")
     favicon.href = currentChampion.image
     document.title = TITLE + currentChampion.name
+
     this.setState({
       champions: allChampions,
       current: currentChampion,
@@ -77,14 +78,15 @@ class App extends React.Component {
               }}
             />
           </Top>
-          <Current
+          {(this.state.current !== null) ? (<Current
             name={this.state.current.name}
             image={this.state.current.image}
             losses={this.state.current.losses}
             kills={this.state.current.kills}
             deaths={this.state.current.deaths}
             assists={this.state.current.assists}
-          />
+          />) : 
+          (<h2>Fertig!</h2>)}
           <Top>
             <Stat
               prefix="Total"
