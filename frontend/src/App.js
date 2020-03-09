@@ -35,8 +35,10 @@ class App extends React.Component {
       .then(res => res.json())
       .then(res => res.message)
     const favicon = document.querySelector("link[rel*='icon']")
-    favicon.href = currentChampion.image
-    document.title = TITLE + currentChampion.name
+    if (currentChampion !== null) {
+      favicon.href = currentChampion.image
+      document.title = TITLE + currentChampion.name
+    }
 
     this.setState({
       champions: allChampions,
@@ -46,6 +48,10 @@ class App extends React.Component {
   }
 
   render = () => {
+
+    let championsDone = 0
+    this.state.champions.forEach(champion => championsDone += champion.done)
+
     return (
       <div className="App">
         <header className="App-header">
@@ -114,6 +120,13 @@ class App extends React.Component {
               stat={{
                 name: "Winrate",
                 value: (this.state.stats.winrate * 1).toFixed(2),
+              }}
+            />
+            <Stat
+              suffix="%)"
+              stat={{
+                name: "Champions finished",
+                value: `${championsDone} / ${this.state.champions.length} (${(championsDone / this.state.champions.length * 100).toFixed(2)}`
               }}
             />
           </Top>
