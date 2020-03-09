@@ -27,11 +27,36 @@ const getCurrentChampion = () => {
 	return new Promise((resolve, reject) => {
 		connection.query(
 			"SELECT * FROM champions WHERE done IS NULL ORDER BY name ASC LIMIT 1",
-			(error, results) => {
+			async (error, results) => {
 				if (error) reject(error)
-				resolve(results[0])
+				if (results.length > 0) {	
+					resolve(results[0])
+				} else {
+					await addNewChampions()
+					connection.query(
+						"SELECT * FROM champions WHERE done IS NULL ORDER BY name ASC LIMIT 1",
+						(error, results)=> {
+							if (error != null) reject(error)
+							if (results.length > 0) {
+								resolve(results[0])
+							} else {
+								resolve(null)
+							}
+						}
+					)
+				}
 			}
 		)
+	})
+}
+
+const addNewChampions = () => {
+	return new Promise((resolve, reject) => {
+		connection.query('INSERT IGNORE INTO champions (id, name, image) VALUES (875, "Sett", "http://ddragon.leagueoflegends.com/cdn/10.5.1/img/champion/Sett.png"),'
+		+ '(523, "Aphelios", "http://ddragon.leagueoflegends.com/cdn/10.5.1/img/champion/Aphelios.png");', error => {
+			if (error != null) reject(error)
+			resolve(true)
+		})
 	})
 }
 
