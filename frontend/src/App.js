@@ -6,8 +6,8 @@ import "./App.css"
 import Stat from "./Stat"
 
 const TITLE = "Emero intet mit: "
-// const URL = "https://leagueapi.cyklan.de"
-const URL = "http://localhost:42069"
+const URL = "https://leagueapi.cyklan.de"
+// const URL = "http://localhost:42069"
 
 class App extends React.Component {
   constructor(props) {
